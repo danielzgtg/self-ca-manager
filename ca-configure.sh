@@ -11,7 +11,7 @@ echo 'Copying files...'
 
 mkdir -p ca
 rm -rf ca/*
-cp -r defaults/* ca/
+cp -r default_ca/* ca/
 unlink ca/README.MD
 
 echo 'Configured!'
