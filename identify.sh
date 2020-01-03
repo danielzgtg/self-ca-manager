@@ -14,7 +14,8 @@ read -p 'Name: ' -r O
 read -p 'Email Address: ' -r emailAddress
 echo
 
-RESULT='[ my_req_distinguished_name ]
+RESULT='
+[ my_req_distinguished_name ]
 C = '"$C"'
 ST = '"$ST"'
 L = '"$L"'
