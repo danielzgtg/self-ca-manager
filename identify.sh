@@ -32,4 +32,8 @@ echo
 mkdir -p identity
 echo "$RESULT" > identity/identity.conf
 
+echo
+echo 'If a CA is desired, run ./ca-configure.sh'
+echo 'If a regular certificate is desired, run ./req-configure.sh'
+echo
 echo 'Identified!'
