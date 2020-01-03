@@ -1,3 +1,6 @@
 - <https://superuser.com/questions/738612/openssl-ca-keyusage-extension>
-- `man openssl`
+- `man openssl` , and other manpages
 - <https://gist.github.com/soarez/9688998>
+- <http://wiki.cacert.org/>
+- <http://rcardon.free.fr/websign/download/api-x509-ext/be/cardon/asn1/x509/extensions/KeyUsage.html>
+- <https://jamielinux.com/docs/openssl-certificate-authority/index.html>
