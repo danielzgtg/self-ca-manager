@@ -10,6 +10,9 @@ echo 'This will RESET the ./ca/ folder!'
 echo 'Copying files...'
 
 mkdir -p ca
+mkdir ca/newcerts
+mkdir ca/certs
+mkdir ca/crl
 rm -rf ca/*
 cp -r default_ca/* ca/
 unlink ca/README.MD

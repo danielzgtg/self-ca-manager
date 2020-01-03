@@ -1,0 +1,3 @@
+- <https://superuser.com/questions/738612/openssl-ca-keyusage-extension>
+- `man openssl`
+- <https://gist.github.com/soarez/9688998>
