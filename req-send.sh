@@ -1,6 +1,8 @@
 #!/bin/bash
+set -e
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-. worker/welcome.sh
+worker/welcome.sh
 
 echo 'Will transfer the certificate request locally.'
 

@@ -1,11 +1,13 @@
 #!/bin/bash
+set -e
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-. worker/welcome.sh
+worker/welcome.sh
 
 echo 'Will set up the CA.'
 echo 'This will REPLACE the CA key!'
 
-. worker/prompt.sh
+worker/prompt.sh
 
 echo 'Picking root CA key...'
 plumbing/genkey.sh ca/root/ca.key

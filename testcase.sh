@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
+set +e
 
 if [[ ! -f testmode ]]; then
   echo 'You are not running tests'
@@ -18,7 +21,7 @@ trap 'err $LINENO $' ERR
 echo 'Automated test cases'
 echo 'This will DELETE all existing data!!!'
 
-. worker/prompt.sh
+worker/prompt.sh
 
 reset() {
   rm -rf ca

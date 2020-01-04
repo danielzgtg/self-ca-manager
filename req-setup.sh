@@ -1,11 +1,13 @@
 #!/bin/bash
+set -e
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-. worker/welcome.sh
+worker/welcome.sh
 
 echo 'Will make a certificate signing request.'
 echo 'This will REPLACE your key!'
 
-. worker/prompt.sh
+worker/prompt.sh
 
 plumbing/genkey.sh req/req.key
 plumbing/request.sh req/req.conf req/req.key req/req.csr

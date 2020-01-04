@@ -1,6 +1,8 @@
 #!/bin/bash
+set -e
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-. worker/welcome.sh
+worker/welcome.sh
 
 echo 'Will set your identity.'
 echo 'Please enter your info below'
@@ -27,7 +29,7 @@ echo 'Please confirm:'
 echo "$RESULT"
 echo
 
-. worker/prompt.sh
+worker/prompt.sh
 
 mkdir -p identity
 echo "$RESULT" > identity/identity.conf

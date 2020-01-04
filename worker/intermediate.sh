@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
-
-if [[ $# -ne 0 ]]; then
-  echo 'Didn'\''t expect arguments'
-  exit 1
-fi
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
 if [[ -d ca/intermediate ]]; then
   echo 'Rotating out old intermediate CA...'

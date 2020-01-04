@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+worker/usage.sh "${BASH_SOURCE[0]}" 'config path' 'output CRL path' -- "$@"
 
 if [[ $# -ne 2 ]]; then
   echo 'Expecting 2 arguments: "config path" "output CRL path"'

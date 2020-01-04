@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
-
-if [[ $# -ne 1 ]]; then
-  echo 'Expecting 1 argument: "CRL path"'
-  exit 1
-fi
+worker/usage.sh "${BASH_SOURCE[0]}" 'CRL path' -- "$@"
 
 openssl crl -inform DER -in "$1" -noout -text
 

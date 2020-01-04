@@ -1,11 +1,13 @@
 #!/bin/bash
+set -e
+worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-. worker/welcome.sh
+worker/welcome.sh
 
 echo 'Will configure the CA.'
 echo 'This will RESET the ./ca/ folder!'
 
-. worker/prompt.sh
+worker/prompt.sh
 
 echo 'Copying files...'
 

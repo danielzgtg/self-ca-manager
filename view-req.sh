@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+worker/usage.sh "${BASH_SOURCE[0]}" 'request path' -- "$@"
 
 if [[ $# -ne 1 ]]; then
   echo 'Expecting 1 argument: "request path"'

@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
-
-if [[ $# -ne 1 ]]; then
-  echo 'Expecting 1 argument: "dhparams path"'
-  exit 1
-fi
+worker/usage.sh "${BASH_SOURCE[0]}" 'dhparams path' -- "$@"
 
 openssl dhparam -in "$1" -noout -text
 

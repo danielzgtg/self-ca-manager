@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
-
-if [[ $# -ne 2 ]]; then
-  echo 'Expecting 2 arguments: "config path" "input condemned certificate path"'
-  exit 1
-fi
+worker/usage.sh "${BASH_SOURCE[0]}" 'config path' 'input condemned certificate path' -- "$@"
 
 openssl ca -config "$1" -revoke "$2"
 
