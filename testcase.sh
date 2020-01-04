@@ -20,7 +20,7 @@ echo 'This will DELETE all existing data!!!'
 
 . util/prompt.sh
 
-cleanup() {
+reset() {
   rm -rf ca
   rm -rf identity
   rm -rf req
@@ -63,6 +63,7 @@ req-bundle() {
   ./req-bundle.sh
 }
 
+reset
 identity-setup
 ca-init
 req-init

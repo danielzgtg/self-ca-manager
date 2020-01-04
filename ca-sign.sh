@@ -36,16 +36,14 @@ if [[ $INFO == *'CRL Sign'* ]]; then
 fi
 
 echo 'Prompting and Signing request...'
-util/casign.sh ca/root.conf ca/req.csr ca/req.crt
+util/casign.sh ca/intermediate.conf ca/req.csr ca/req.crt
 
 echo 'Saving a copy of the signed certificate...'
-CERTS_DIR=ca/rootcerts/
+CERTS_DIR=ca/intermediatecerts/
 NUM=$(find "$CERTS_DIR" ! -path "$CERTS_DIR" -printf a | wc -c)
 cp ca/req.crt "$CERTS_DIR"'req'"$NUM"'.crt'
 
-echo 'Removing OpenSSL backup files...'
-rm ca/newcerts/*.pem
-rm ca/*.old
+util/cacleanup.sh
 
 echo
 echo 'Review the ./ca/req.crt file'
