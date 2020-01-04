@@ -21,10 +21,12 @@ mkdir ca/intermediate/certs
 mkdir ca/intermediate/crl
 
 # Root and intermediate config
-cat ca/common/config_header.conf ca/root/config_footer.conf > ca/root/ca.conf
+cat ca/common/config_header.conf ca/root/config_footer.conf ca/root/output_type.conf > ca/root/ca.conf
 unlink ca/root/config_footer.conf
-cat ca/common/config_header.conf ca/intermediate/config_footer.conf > ca/intermediate/ca.conf
+unlink ca/root/output_type.conf
+cat ca/common/config_header.conf ca/intermediate/config_footer.conf ca/intermediate/output_type.conf > ca/intermediate/ca.conf
 unlink ca/intermediate/config_footer.conf
+unlink ca/intermediate/output_type.conf
 
 # Root and intermediate init
 cat ca/common/init_req_header.conf ca/root/init_req_footer.conf > ca/root/init_req.conf
