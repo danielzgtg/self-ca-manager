@@ -15,8 +15,7 @@ echo 'The specified certificate will become UNUSABLE!'
 echo 'Revoking specified certificate...'
 plumbing/revoke.sh ca/intermediate/ca.conf "$1"
 
-echo 'Generating intermediate CA CRL...'
-plumbing/gencrl.sh ca/intermediate/ca.conf ca/intermediate/ca.crl
+worker/intermediatecrl.sh
 
 worker/cacleanup.sh
 

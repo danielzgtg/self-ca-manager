@@ -38,8 +38,7 @@ fi
 echo 'Prompting and Signing request...'
 plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt
 
-echo 'Regenerating intermediate CA CRL...'
-plumbing/gencrl.sh ca/intermediate/ca.conf ca/intermediate/ca.crl
+worker/intermediatecrl.sh
 
 echo 'Saving a copy of the signed certificate...'
 CERTS_DIR=ca/intermediate/certs/

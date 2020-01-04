@@ -13,8 +13,7 @@ plumbing/genkey.sh ca/root/ca.key
 echo 'Self-signing root CA...'
 plumbing/selfcert.sh ca/root/init_req.conf ca/root/ca.key ca/root/ca.crt
 
-echo 'Generating root CA CRL...'
-plumbing/gencrl.sh ca/root/ca.conf ca/root/ca.crl
+worker/rootcrl.sh
 
 worker/intermediate.sh
 
