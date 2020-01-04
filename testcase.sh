@@ -18,7 +18,7 @@ trap 'err $LINENO $' ERR
 echo 'Automated test cases'
 echo 'This will DELETE all existing data!!!'
 
-. util/prompt.sh
+. worker/prompt.sh
 
 reset() {
   rm -rf ca

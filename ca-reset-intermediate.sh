@@ -1,21 +1,21 @@
 #!/bin/bash
 
-. util/welcome.sh
+. worker/welcome.sh
 
 echo 'Will revoke the intermediate CA and create a new one.'
 echo 'This will RESET the intermediate CA!'
 
-. util/prompt.sh
+. worker/prompt.sh
 
 echo 'Revoking old intermediate CA...'
-util/revoke.sh ca/root.conf ca/intermediate.crt
+plumbing/revoke.sh ca/root.conf ca/intermediate.crt
 
 echo 'Generating root CA CRL...'
-util/gencrl.sh ca/root.conf ca/root.crl
+plumbing/gencrl.sh ca/root.conf ca/root.crl
 
-util/intermediate.sh
+worker/intermediate.sh
 
-util/cacleanup.sh
+worker/cacleanup.sh
 
 echo
 echo 'Intermediate CA has been Reset!'

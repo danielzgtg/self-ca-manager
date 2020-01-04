@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. util/welcome.sh
+. worker/welcome.sh
 
 echo 'Will set your identity.'
 echo 'Please enter your info below'
@@ -27,7 +27,7 @@ echo 'Please confirm:'
 echo "$RESULT"
 echo
 
-. util/prompt.sh
+. worker/prompt.sh
 
 mkdir -p identity
 echo "$RESULT" > identity/identity.conf

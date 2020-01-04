@@ -1,11 +1,11 @@
 #!/bin/bash
 
-. util/welcome.sh
+. worker/welcome.sh
 
 echo 'Will configure the certificate request.'
 echo 'This will RESET the ./req/ folder!'
 
-. util/prompt.sh
+. worker/prompt.sh
 
 echo 'Copying files...'
 

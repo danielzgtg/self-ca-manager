@@ -1,14 +1,14 @@
 #!/bin/bash
 
-. util/welcome.sh
+. worker/welcome.sh
 
 echo 'Will make a certificate signing request.'
 echo 'This will REPLACE your key!'
 
-. util/prompt.sh
+. worker/prompt.sh
 
-util/genkey.sh req/req.key
-util/request.sh req/req.conf req/req.key req/req.csr
+plumbing/genkey.sh req/req.key
+plumbing/request.sh req/req.conf req/req.key req/req.csr
 
 echo
 echo 'Review the ./req/req.csr file'

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. util/welcome.sh
+. worker/welcome.sh
 
 echo 'Will sign a certificate signing request.'
 
@@ -36,17 +36,17 @@ if [[ $INFO == *'CRL Sign'* ]]; then
 fi
 
 echo 'Prompting and Signing request...'
-util/casign.sh ca/intermediate.conf ca/req.csr ca/req.crt
+plumbing/casign.sh ca/intermediate.conf ca/req.csr ca/req.crt
 
 echo 'Regenerating intermediate CA CRL...'
-util/gencrl.sh ca/intermediate.conf ca/intermediate.crl
+plumbing/gencrl.sh ca/intermediate.conf ca/intermediate.crl
 
 echo 'Saving a copy of the signed certificate...'
 CERTS_DIR=ca/intermediate_certs/
 NUM=$(find "$CERTS_DIR" ! -path "$CERTS_DIR" -printf a | wc -c)
 cp ca/req.crt "$CERTS_DIR"'req'"$NUM"'.crt'
 
-util/cacleanup.sh
+worker/cacleanup.sh
 
 echo
 echo 'Review the ./ca/req.crt file'

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. util/welcome.sh
+. worker/welcome.sh
 
 echo 'Will transfer back the signed certificate locally.'
 
