@@ -1,6 +1,17 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" '-fast-testing-mode' -- "$@"
+
+if [[ "$1" == '-fast-testing-mode' ]]; then
+  FAST_TESTING_MODE=0
+else
+  FAST_TESTING_MODE=1
+fi
+
+if [[ $FAST_TESTING_MODE -eq 0 ]] && [[ ! -f testmode ]]; then
+  echo '-fast-testing-mode may only be used when testing'
+  exit 1
+fi
 
 worker/welcome.sh
 
@@ -18,7 +29,12 @@ worker/verify.sh ./req/root.crt ./req/chain.crt ./req/req.crt
 
 echo 'Setting dhparams...'
 
-openssl dhparam -2 -out req/dhparams.pem
+if [[ $FAST_TESTING_MODE -eq 0 ]]; then
+  echo 'WARNING: Using weaker params to speed up testing!!!'
+  openssl dhparam -dsaparam -out req/dhparams.pem 1024
+else
+  openssl dhparam -2 -out req/dhparams.pem 2048
+fi
 
 echo 'Concatenating everything together...'
 

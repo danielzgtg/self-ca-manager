@@ -63,7 +63,7 @@ ca-respond() {
 }
 
 req-bundle() {
-  ./req-bundle.sh
+  ./req-bundle.sh -fast-testing-mode
 }
 
 reset
