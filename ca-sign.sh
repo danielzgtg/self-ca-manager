@@ -38,6 +38,9 @@ fi
 echo 'Prompting and Signing request...'
 util/casign.sh ca/intermediate.conf ca/req.csr ca/req.crt
 
+echo 'Regenerating intermediate CA CRL...'
+util/gencrl.sh ca/intermediate.conf ca/intermediate.crl
+
 echo 'Saving a copy of the signed certificate...'
 CERTS_DIR=ca/intermediate_certs/
 NUM=$(find "$CERTS_DIR" ! -path "$CERTS_DIR" -printf a | wc -c)
