@@ -6,6 +6,14 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
+if [[ -d ca/intermediate ]]; then
+  echo 'Rotating out old intermediate CA...'
+  mv -f ca/intermediate/ ca/intermediate_old/
+fi
+
+echo 'Inflating intermediate CA...'
+cp -r ca/intermediate_init/ ca/intermediate/
+
 echo 'Picking intermediate CA key...'
 plumbing/genkey.sh ca/intermediate/ca.key
 

@@ -38,6 +38,9 @@ rm -rf ca/common/
 cat identity/identity.conf >> ca/root/init_req.conf
 cat identity/identity.conf >> ca/intermediate/init_req.conf
 
+# Backup intermediate CA in init state; it will be copied back in ./ca-setup.sh
+mv ca/intermediate/ ca/intermediate_init/
+
 echo
 echo 'Make changes to the .conf files in the ./ca/ folder if necessary'
 echo 'Then run ./ca-setup.sh'
