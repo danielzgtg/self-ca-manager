@@ -39,7 +39,7 @@ echo 'Prompting and Signing request...'
 util/casign.sh ca/intermediate.conf ca/req.csr ca/req.crt
 
 echo 'Saving a copy of the signed certificate...'
-CERTS_DIR=ca/intermediatecerts/
+CERTS_DIR=ca/intermediate_certs/
 NUM=$(find "$CERTS_DIR" ! -path "$CERTS_DIR" -printf a | wc -c)
 cp ca/req.crt "$CERTS_DIR"'req'"$NUM"'.crt'
 

@@ -12,9 +12,9 @@ echo 'Copying files...'
 mkdir -p ca
 rm -rf ca/*
 
-mkdir ca/rootcrl
-mkdir ca/intermediatecerts
-mkdir ca/intermediatecrl
+mkdir ca/root_crl
+mkdir ca/intermediate_certs
+mkdir ca/intermediate_crl
 
 cp -r default_ca/* ca/
 unlink ca/README.MD
