@@ -6,13 +6,13 @@ echo 'Will sign a certificate signing request.'
 
 echo 'Checking...'
 
-if [[ ! -e ./ca/req.csr ]]; then
+if [[ ! -e ca/req.csr ]]; then
   echo 'ERROR: No certificate signing request to sign'
   echo 'Please make sure the request is placed at ./ca/req.csr'
   exit 1
 fi
 
-if [[ -e ./ca/req.crt ]]; then
+if [[ -e ca/req.crt ]]; then
   echo 'ERROR: Just signed a certificate'
   echo 'If another certificate needs to be signed, remove the previous one at ./ca/req.crt'
   exit 1
@@ -36,13 +36,15 @@ if [[ $INFO == *'CRL Sign'* ]]; then
 fi
 
 echo 'Prompting and Signing request...'
-
-util/casign.sh ca/ca.conf ca/req.csr ca/req.crt
+util/casign.sh ca/root.conf ca/req.csr ca/req.crt
 
 echo 'Saving a copy of the signed certificate...'
+NUM=$(find ca/certs/ ! -path ca/certs/ -printf a | wc -c)
+cp ca/req.crt 'ca/certs/req'"$NUM"'.crt'
 
-NUM=$(find ./ca/certs/ ! -path ./ca/certs/ -printf a | wc -c)
-cp ./ca/req.crt './ca/certs/req'"$NUM"'.crt'
+echo 'Removing OpenSSL backup files...'
+rm ca/newcerts/*.pem
+rm ca/*.old
 
 echo
 echo 'Review the ./ca/req.crt file'

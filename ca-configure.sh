@@ -12,14 +12,16 @@ echo 'Copying files...'
 mkdir -p ca
 rm -rf ca/*
 
-mkdir ca/newcerts
 mkdir ca/certs
 mkdir ca/crl
 
 cp -r default_ca/* ca/
 unlink ca/README.MD
 
-cat identity/identity.conf >> ca/ca_self_init_req.conf
+cat ca/common_header.conf ca/root_footer.conf > ca/root.conf
+unlink ca/common_header.conf
+unlink ca/root_footer.conf
+cat identity/identity.conf >> ca/root_init_req.conf
 
 echo
 echo 'Make changes to the .conf files in the ./ca/ folder if necessary'

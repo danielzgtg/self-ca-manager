@@ -4,3 +4,4 @@
 - <http://wiki.cacert.org/>
 - <http://rcardon.free.fr/websign/download/api-x509-ext/be/cardon/asn1/x509/extensions/KeyUsage.html>
 - <https://jamielinux.com/docs/openssl-certificate-authority/index.html>
+- <https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html>
