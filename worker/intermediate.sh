@@ -7,15 +7,15 @@ if [[ $# -ne 0 ]]; then
 fi
 
 echo 'Picking intermediate CA key...'
-plumbing/genkey.sh ca/intermediate.key
+plumbing/genkey.sh ca/intermediate/ca.key
 
 echo 'Making intermediate CA request...'
-plumbing/request.sh ca/intermediate_init_req.conf ca/intermediate.key ca/intermediate.csr
+plumbing/request.sh ca/intermediate/init_req.conf ca/intermediate/ca.key ca/intermediate/ca.csr
 
 echo 'Signing intermediate CA certificate...'
-plumbing/casign.sh -y ca/root.conf ca/intermediate.csr ca/intermediate.crt
+plumbing/casign.sh -y ca/root/ca.conf ca/intermediate/ca.csr ca/intermediate/ca.crt
 
 echo 'Generating intermediate CA CRL...'
-plumbing/gencrl.sh ca/intermediate.conf ca/intermediate.crl
+plumbing/gencrl.sh ca/intermediate/ca.conf ca/intermediate/ca.crl
 
 exit 0

@@ -8,13 +8,13 @@ echo 'This will REPLACE the CA key!'
 . worker/prompt.sh
 
 echo 'Picking root CA key...'
-plumbing/genkey.sh ca/root.key
+plumbing/genkey.sh ca/root/ca.key
 
 echo 'Self-signing root CA...'
-plumbing/selfcert.sh ca/root_init_req.conf ca/root.key ca/root.crt
+plumbing/selfcert.sh ca/root/init_req.conf ca/root/ca.key ca/root/ca.crt
 
 echo 'Generating root CA CRL...'
-plumbing/gencrl.sh ca/root.conf ca/root.crl
+plumbing/gencrl.sh ca/root/ca.conf ca/root/ca.crl
 
 worker/intermediate.sh
 

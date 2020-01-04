@@ -36,13 +36,13 @@ if [[ $INFO == *'CRL Sign'* ]]; then
 fi
 
 echo 'Prompting and Signing request...'
-plumbing/casign.sh ca/intermediate.conf ca/req.csr ca/req.crt
+plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt
 
 echo 'Regenerating intermediate CA CRL...'
-plumbing/gencrl.sh ca/intermediate.conf ca/intermediate.crl
+plumbing/gencrl.sh ca/intermediate/ca.conf ca/intermediate/ca.crl
 
 echo 'Saving a copy of the signed certificate...'
-CERTS_DIR=ca/intermediate_certs/
+CERTS_DIR=ca/intermediate/certs/
 NUM=$(find "$CERTS_DIR" ! -path "$CERTS_DIR" -printf a | wc -c)
 cp ca/req.crt "$CERTS_DIR"'req'"$NUM"'.crt'
 

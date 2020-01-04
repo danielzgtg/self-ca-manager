@@ -8,6 +8,6 @@ fi
 
 echo 'Removing OpenSSL backup files...'
 rm -f ca/newcerts/*.pem
-rm -f ca/*.old
+find . -name '*.old' -exec unlink '{}' \;
 
 exit 0

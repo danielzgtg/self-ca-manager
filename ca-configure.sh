@@ -12,30 +12,31 @@ echo 'Copying files...'
 mkdir -p ca
 rm -rf ca/*
 
-mkdir ca/root_crl
-mkdir ca/intermediate_certs
-mkdir ca/intermediate_crl
-
 cp -r default_ca/* ca/
-unlink ca/README.MD
+
+mkdir ca/root/crl
+mkdir ca/intermediate/certs
+mkdir ca/intermediate/crl
 
 # Root and intermediate config
-cat ca/common_header.conf ca/root_footer.conf > ca/root.conf
-unlink ca/root_footer.conf
-cat ca/common_header.conf ca/intermediate_footer.conf > ca/intermediate.conf
-unlink ca/intermediate_footer.conf
-unlink ca/common_header.conf
+cat ca/common/config_header.conf ca/root/config_footer.conf > ca/root/ca.conf
+unlink ca/root/config_footer.conf
+cat ca/common/config_header.conf ca/intermediate/config_footer.conf > ca/intermediate/ca.conf
+unlink ca/intermediate/config_footer.conf
 
 # Root and intermediate init
-cat ca/common_init_req_header.conf ca/root_init_req_footer.conf > ca/root_init_req.conf
-unlink ca/root_init_req_footer.conf
-cat ca/common_init_req_header.conf ca/intermediate_init_req_footer.conf > ca/intermediate_init_req.conf
-unlink ca/intermediate_init_req_footer.conf
-unlink ca/common_init_req_header.conf
+cat ca/common/init_req_header.conf ca/root/init_req_footer.conf > ca/root/init_req.conf
+unlink ca/root/init_req_footer.conf
+cat ca/common/init_req_header.conf ca/intermediate/init_req_footer.conf > ca/intermediate/init_req.conf
+unlink ca/intermediate/init_req_footer.conf
+
+# Cleanup
+unlink ca/README.MD
+rm -rf ca/common/
 
 # Identity
-cat identity/identity.conf >> ca/root_init_req.conf
-cat identity/identity.conf >> ca/intermediate_init_req.conf
+cat identity/identity.conf >> ca/root/init_req.conf
+cat identity/identity.conf >> ca/intermediate/init_req.conf
 
 echo
 echo 'Make changes to the .conf files in the ./ca/ folder if necessary'

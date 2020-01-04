@@ -8,10 +8,10 @@ echo 'This will RESET the intermediate CA!'
 . worker/prompt.sh
 
 echo 'Revoking old intermediate CA...'
-plumbing/revoke.sh ca/root.conf ca/intermediate.crt
+plumbing/revoke.sh ca/root/ca.conf ca/intermediate/ca.crt
 
 echo 'Generating root CA CRL...'
-plumbing/gencrl.sh ca/root.conf ca/root.crl
+plumbing/gencrl.sh ca/root/ca.conf ca/root/ca.crl
 
 worker/intermediate.sh
 
