@@ -22,5 +22,6 @@ cat identity/identity.conf >> req/req.conf
 echo
 echo 'Make changes to the .conf files in the ./req/ folder if necessary'
 echo 'Then run ./req-setup.sh'
+echo 'Also ask the CA for their certificate chain then place it at ./req/root.crt and ./req/chain.crt'
 echo
 echo 'Configured!'
