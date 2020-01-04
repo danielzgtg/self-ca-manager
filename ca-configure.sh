@@ -12,8 +12,8 @@ echo 'Copying files...'
 mkdir -p ca
 rm -rf ca/*
 
-mkdir ca/certs
-mkdir ca/crl
+mkdir ca/rootcerts
+mkdir ca/rootcrl
 
 cp -r default_ca/* ca/
 unlink ca/README.MD
