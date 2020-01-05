@@ -6,11 +6,8 @@ echo 'Generating '"$1"' CA CRL...'
 plumbing/gencrl.sh ca/"$1"/ca.conf ca/"$1"/ca.crl
 
 echo 'Achiving a copy of the CRL...'
-CRL_DIR=ca/"$1"/crl/
-NUM=$(find "$CRL_DIR" ! -path "$CRL_DIR" -printf a | wc -c)
-set -x
-cp -T ca/"$1"/ca.crl "$CRL_DIR"'ca'"$NUM"'.crl'
-set +x
+NUM=$(( 0x$(cat ca/"$1"/crl.srl) - 1 ))
+cp -T ca/"$1"/ca.crl ca/"$1"/crl/'ca'"$NUM"'.crl'
 
 echo 'Publishing '"$1"' CA CRL...'
 case "$1" in
