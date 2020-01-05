@@ -38,7 +38,8 @@ fi
 
 echo 'Concatenating everything together...'
 
-cat req/req.key req/req.crt req/chain.crt req/root.crt req/dhparams.pem > req/req.pem
+cat req/chain.crt req/root.crt > req/cachain.crt
+cat req/req.key req/req.crt req/cachain.crt req/dhparams.pem > req/req.pem
 
 echo
 echo 'The cryptography data at ./req/req.pem is bundled, signed, and ready to use.'

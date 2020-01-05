@@ -11,7 +11,5 @@ The next script to use will be indicated at the end of each script.
 
 TODO crl send
 TODO: AES
-TODO: OIS
-TODO: OCSP
 TODO script for verify
 TODO VPN

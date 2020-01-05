@@ -1,4 +1,4 @@
-- <https://superuser.com/questions/738612/openssl-ca-keyusage-extension>
+- <https://superuser.com/q/738612>
 - `man openssl` , and other manpages
 - <https://gist.github.com/soarez/9688998>
 - <http://wiki.cacert.org/>
@@ -6,3 +6,4 @@
 - <https://jamielinux.com/docs/openssl-certificate-authority/index.html>
 - <https://raymii.org/s/tutorials/OpenSSL_command_line_Root_and_Intermediate_CA_including_OCSP_CRL%20and_revocation.html>
 - <https://pki-tutorial.readthedocs.io/en/latest/expert/component-ca.conf.html>
+- <https://stackoverflow.com/q/41701860>

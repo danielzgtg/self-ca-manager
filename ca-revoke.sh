@@ -1,13 +1,8 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" 'input condemned certificate path' -- "$@"
 
 worker/welcome.sh
-
-if [[ $# -ne 1 ]]; then
-  echo 'Expecting 1 argument: "input condemned certificate path"'
-  exit 1
-fi
 
 echo 'Will revoke the specified certificate.'
 echo 'The specified certificate will become UNUSABLE!'
