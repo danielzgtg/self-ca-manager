@@ -42,20 +42,26 @@ add-type() {
   cat common/output_type_footer.conf >> "$1"/ca.conf
 }
 
-init-ca() {
+print-ca-info() {
   # $1 - CA type
-  # $2 - CA self init signature config path
 
-  # CA config
-  cat common/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
-  echo '
+  echo -n '
 [ aia_info ]
 caIssuers;URI.0 = '"$CA_DIST_URL""$1"'.crt
 OCSP;URI.0 = '"$CA_DIST_URL""$1"'_ocsp/
 
 [ crl_info ]
 URI.0 = '"$CA_DIST_URL""$1"'.crl
-' >> "$1"/ca.conf
+'
+}
+
+init-ca() {
+  # $1 - CA type
+  # $2 - CA self init signature config path
+
+  # CA config
+  cat common/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
+  print-ca-info "$1" >> "$1"/ca.conf
   unlink "$1"/config_footer.conf
   add-type "$1" common/ocsp_type.conf
 
@@ -75,6 +81,10 @@ add-type root common/intermediate_type.conf
 
 init-ca intermediate common/intermediate_type.conf
 add-type intermediate generic_type.conf
+
+# Custom extensions support
+cp -T common/output_type_footer.conf custom_exts_footer.conf
+print-ca-info intermediate >> custom_exts_footer.conf
 
 # Cleanup
 rm -rf common/

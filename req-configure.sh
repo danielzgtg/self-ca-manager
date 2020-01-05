@@ -20,6 +20,13 @@ case "$1" in
   'generic')
     TYPE_PATH='generic_type.conf'
     ;;
+
+  'custom')
+    if [[ ! -f req/custom_exts.conf ]]; then
+      echo 'You need to specify custom extensions in ./req/custom_exts.conf'
+      exit 1
+    fi
+    ;;
   'bootstrap'|'init'|'ocsp')
     echo 'ERROR: Specified extension profile is to be for the CA'\''s private internal use'
     echo 'No CA would sign such a certificate for an outside entity so don'\''t even try'

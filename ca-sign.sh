@@ -10,6 +10,12 @@ case "$1" in
   'generic')
     # OK
     ;;
+  'custom')
+    if [[ ! -f ca/custom_exts.conf ]]; then
+      echo 'Please place the requester'\''s custom extensions in ./ca/custom_exts.conf'
+      exit 1
+    fi
+    ;;
   'bootstrap'|'init'|'ocsp')
     echo 'ERROR: Specified extension profile is for private internal use'
     echo 'Signing such a request would grant the requester all privileges that you have'

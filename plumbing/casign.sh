@@ -10,10 +10,17 @@ else
   QUIET=1
 fi
 
-ARGS=(-notext -config "$1" -extensions "$4"_ext -out "$3" -infiles "$2")
+ARGS=(-notext -config "$1" -out "$3" -infiles "$2")
 
 if [[ $QUIET -eq 0 ]]; then
   ARGS=(-batch "${ARGS[@]}")
+fi
+
+if [[ "$4" == 'custom' ]]; then
+  ARGS=(-extfile ca/custom_exts_actual.conf "${ARGS[@]}")
+  cat ca/custom_exts.conf ca/custom_exts_footer.conf > ca/custom_exts_actual.conf
+else
+  ARGS=(-extensions "$4"_ext "${ARGS[@]}")
 fi
 
 openssl ca "${ARGS[@]}"
