@@ -39,7 +39,7 @@ add-type() {
   # $2 - signtature output type config path
 
   add-req-type-directly "$1"/ca.conf "$2"
-  cat common/output_type_footer.conf >> "$1"/ca.conf
+  cat init/output_type_footer.conf >> "$1"/ca.conf
 }
 
 print-ca-info() {
@@ -65,35 +65,38 @@ init-ca() {
   # $1 - CA type
   # $2 - CA self init signature config path
 
+  # CA files
+  cp -rt "$1"/ all/*
+
   # CA config
-  cat common/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
+  cat init/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
   print-ca-info "$1" >> "$1"/ca.conf
   unlink "$1"/config_footer.conf
-  add-type "$1" common/ocsp_type.conf
+  add-type "$1" init/ocsp_type.conf
 
   # CA init request config
   cp -T req_header.conf "$1"/init_req.conf
   add-init-req-type "$1" "$2"
-  add-init-req-type "$1" common/ocsp_type.conf
+  add-init-req-type "$1" init/ocsp_type.conf
 }
 
 # Root CA
 
-init-ca root common/root_type.conf
-add-type root common/root_type.conf
-add-type root common/intermediate_type.conf
+init-ca root init/root_type.conf
+add-type root init/root_type.conf
+add-type root init/intermediate_type.conf
 
 # Intermediate CA
 
-init-ca intermediate common/intermediate_type.conf
+init-ca intermediate init/intermediate_type.conf
 add-type intermediate generic_type.conf
 
 # Custom extensions support
-cp -T common/output_type_footer.conf custom_exts_footer.conf
+cp -T init/output_type_footer.conf custom_exts_footer.conf
 print-ca-info intermediate >> custom_exts_footer.conf
 
 # Cleanup
-rm -rf common/
+rm -rf init/ all/
 unlink req_header.conf
 unlink generic_type.conf
 
