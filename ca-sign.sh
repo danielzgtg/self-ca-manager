@@ -63,8 +63,18 @@ restrict-privilege 'Certificate Sign'
 restrict-privilege 'CRL Sign'
 restrict-privilege 'OCSP Signing'
 
+SAN=$(cat ca/subject_alternative_names.conf)
+ORIGINAL=$(cat ca/intermediate/ca.conf)
+
+if [[ -n "$SAN" ]]; then
+  printf '%s\n[ san ]\n%s\n' "${ORIGINAL//#subjectAltName = @san/subjectAltName = @san}" "$SAN" \
+    > ca/intermediate/ca_actual.conf
+else
+  echo "$ORIGINAL" > ca/intermediate/ca_actual.conf
+fi
+
 echo 'Prompting and Signing request...'
-plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt "$1"
+plumbing/casign.sh ca/intermediate/ca_actual.conf ca/req.csr ca/req.crt "$1"
 
 worker/gencrl.sh intermediate
 

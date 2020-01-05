@@ -57,10 +57,13 @@ worker/initdir.sh identity
 # Global
 cat identity/req_header_header.conf <(echo -n "$RESULT") > identity/req_header.conf
 unlink identity/req_header_header.conf
+echo > identity/subject_alternative_names.conf
 
 # CA-only
 echo -n "$server" > identity/ca_dist_url.txt
 
+echo
+echo 'You might want to add same alternative names to ./identity/subject_alternative_names.conf'
 echo
 echo 'If a CA is desired, run ./ca-configure.sh'
 echo 'If a regular certificate is desired, run ./req-configure.sh (generic)'

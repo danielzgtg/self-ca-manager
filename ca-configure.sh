@@ -26,6 +26,7 @@ add-req-type-directly() {
   # $2 - signtature output type config path
 
   cat "$2" >> "$1"
+  echo '#subjectAltName = @san' >> "$1"
 }
 
 add-init-req-type() {

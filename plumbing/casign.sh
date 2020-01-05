@@ -18,7 +18,15 @@ fi
 
 if [[ "$4" == 'custom' ]]; then
   ARGS=(-extfile ca/custom_exts_actual.conf "${ARGS[@]}")
-  cat ca/custom_exts_header.conf ca/custom_exts.conf ca/custom_exts_footer.conf > ca/custom_exts_actual.conf
+  SAN=$(cat ca/subject_alternative_names.conf)
+  cat ca/custom_exts_header.conf <(
+    if [[ -n "$SAN" ]]; then
+      echo 'subjectAltName = @san'
+    fi
+  ) ca/custom_exts.conf <(
+    printf '[ san ]\n%s\n' "$SAN"
+  ) ca/custom_exts_footer.conf \
+    > ca/custom_exts_actual.conf
 else
   ARGS=(-extensions "$4"_ext "${ARGS[@]}")
 fi

@@ -24,17 +24,11 @@ echo 'This will DELETE all existing data!!!'
 worker/prompt.sh
 
 CUSTOM_EXTS='
-subjectAltName = @san
 subjectKeyIdentifier = hash
 basicConstraints = critical, CA:FALSE
-keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage = codeSigning
 certificatePolicies = 2.5.29.32.0
-
-[ san ]
-DNS.1 = *.example.org
-DNS.2 = *.example.net
-DNS.3 = example.org
-DNS.4 = example.net
 '
 
 identity-setup() {
@@ -116,6 +110,14 @@ rm -rf req
 
 identity-setup
 ca-init
+test-cert generic
+test-cert custom
+echo '
+DNS.1 = *.example.org
+DNS.2 = *.example.net
+DNS.3 = example.org
+DNS.4 = example.net
+' > identity/subject_alternative_names.conf
 test-cert generic
 test-cert custom
 

@@ -13,7 +13,8 @@ fi
 
 echo 'Copying the request...'
 
-cp req/req.csr ca/
+cp -T req/req.csr ca/req.csr
+cp -fT identity/subject_alternative_names.conf ca/subject_alternative_names.conf
 
 echo
 echo 'Next, use ./ca-sign.sh (generic)'
