@@ -68,10 +68,10 @@ plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt "$1"
 
 worker/gencrl.sh intermediate
 
-echo 'Saving a copy of the signed certificate...'
+echo 'Archiving a copy of the signed certificate...'
 CERTS_DIR=ca/intermediate/certs/
 NUM=$(find "$CERTS_DIR" ! -path "$CERTS_DIR" -printf a | wc -c)
-cp ca/req.crt "$CERTS_DIR"'req'"$NUM"'.crt'
+cp -T ca/req.crt "$CERTS_DIR"'req'"$NUM"'.crt'
 
 worker/cacleanup.sh
 
