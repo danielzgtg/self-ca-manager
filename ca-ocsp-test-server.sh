@@ -16,8 +16,7 @@ echo 'WARNING: The OpenSSL implementation is for testing only. Please use a real
 
 worker/prompt.sh
 
-ARGS=(-url http://"$2"/ -text -index index.txt -CA ca.crt -rkey ocsp.key -rsigner ocsp.crt)
-
+declare -a ARGS=(-url http://"$2"/ -text -index index.txt -CA ca.crt -rkey ocsp.key -rsigner ocsp.crt)
 if [[ $ONCE -eq 0 ]]; then
   ARGS+=(-nrequest 1)
 fi

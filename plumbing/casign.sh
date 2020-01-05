@@ -10,8 +10,7 @@ else
   QUIET=1
 fi
 
-ARGS=(-notext -config "$1" -out "$3" -infiles "$2")
-
+declare -a ARGS=(-notext -config "$1" -out "$3" -infiles "$2")
 if [[ $QUIET -eq 0 ]]; then
   ARGS=(-batch "${ARGS[@]}")
 fi
