@@ -20,11 +20,19 @@ mkdir root/crl
 mkdir intermediate/certs
 mkdir intermediate/crl
 
+add-req-type-directly() {
+  # $1 - CA config path or self-signing request config path
+  # $2 - signtature output type config path
+
+  cat "$2" >> "$1"
+}
+
 add-type-directly() {
   # $1 - CA config path or self-signing request config path
   # $2 - signtature output type config path
 
-  cat "$2" common/output_type_footer.conf >> "$1"
+  add-req-type-directly "$1" "$2"
+  cat common/output_type_footer.conf >> "$1"
 }
 
 add-type() {
@@ -63,18 +71,25 @@ init-ca-config() {
 }
 
 # Root and intermediate config
+
 init-ca-config root
 add-type root common/intermediate_type.conf
 add-type root common/ocsp_type.conf
+
 init-ca-config intermediate
 add-type intermediate generic_type.conf
 add-type intermediate common/ocsp_type.conf
 
 # Root and intermediate init
+
 cp -T req_header.conf root/init_req.conf
 add-ca-info-directly root/init_req.conf root
 add-type-directly root/init_req.conf common/root_type.conf
-cat req_header.conf common/intermediate_type.conf > intermediate/init_req.conf
+add-req-type-directly root/init_req.conf common/ocsp_type.conf
+
+cp -T req_header.conf intermediate/init_req.conf
+add-req-type-directly intermediate/init_req.conf common/intermediate_type.conf
+add-req-type-directly intermediate/init_req.conf common/ocsp_type.conf
 
 # Cleanup
 rm -rf common/

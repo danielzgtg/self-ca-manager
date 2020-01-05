@@ -16,6 +16,8 @@ echo 'Self-signing root CA...'
 plumbing/selfcert.sh ca/root/init_req.conf ca/root/ca.key ca/root/ca.crt
 cp -T ca/root/ca.crt ca/www/root.crt
 
+#worker/initocsp.sh root
+
 worker/rootcrl.sh
 
 worker/intermediate.sh
