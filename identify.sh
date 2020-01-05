@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -C
 worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
 worker/welcome.sh

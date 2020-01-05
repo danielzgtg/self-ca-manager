@@ -11,4 +11,3 @@ The next script to use will be indicated at the end of each script.
 
 TODO: AES
 TODO VPN
-TODO structure tests

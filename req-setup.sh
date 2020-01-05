@@ -7,12 +7,23 @@ worker/welcome.sh
 echo 'Will make a certificate signing request.'
 echo 'This will REPLACE your key!'
 
-worker/prompt.sh
-
 TYPE=$(cat req/type.txt)
 
+if [[ "$TYPE" == 'custom' ]] && [[ ! -f req/custom_exts.conf ]]; then
+  echo 'You need to specify custom extensions in ./req/custom_exts.conf'
+  exit 1
+fi
+
+worker/prompt.sh
+
+cp -Tf req/req.conf req/req_actual.conf
+
+if [[ "$TYPE" == 'custom' ]]; then
+  cat req/custom_exts.conf >> req/req_actual.conf
+fi
+
 plumbing/genkey.sh req/req.key
-plumbing/request.sh req/req.conf req/req.key req/req.csr "$TYPE"
+plumbing/request.sh req/req_actual.conf req/req.key req/req.csr "$TYPE"
 
 echo
 echo 'Review the ./req/req.csr file'

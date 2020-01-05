@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -C
 worker/usage.sh "${BASH_SOURCE[0]}" 'extension profile' -- "$@"
 
 worker/welcome.sh
@@ -7,25 +8,12 @@ worker/welcome.sh
 echo 'Will configure the certificate request for profile "'"$1"'"'
 echo 'This will RESET the ./req/ folder!'
 
-worker/prompt.sh
-
-worker/initdir.sh req
-cd req
-
-echo 'Building request config...'
-
-echo -n "$1" > type.txt
-
 case "$1" in
   'generic')
     TYPE_PATH='generic_type.conf'
     ;;
-
   'custom')
-    if [[ ! -f req/custom_exts.conf ]]; then
-      echo 'You need to specify custom extensions in ./req/custom_exts.conf'
-      exit 1
-    fi
+    TYPE_PATH='custom_type.conf'
     ;;
   'bootstrap'|'init'|'ocsp')
     echo 'ERROR: Specified extension profile is to be for the CA'\''s private internal use'
@@ -39,11 +27,19 @@ case "$1" in
     ;;
 esac
 
+worker/prompt.sh
+
+worker/initdir.sh req
+cd req
+
+echo 'Building request config...'
+
+echo -n "$1" > type.txt
 cat req_header.conf "$TYPE_PATH" > req.conf
 
 # Cleanup
 unlink req_header.conf
-unlink generic_type.conf
+rm ./*_type.conf
 
 echo
 echo 'Make changes to the .conf files in the ./req/ folder if necessary'

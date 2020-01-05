@@ -18,7 +18,7 @@ fi
 
 if [[ "$4" == 'custom' ]]; then
   ARGS=(-extfile ca/custom_exts_actual.conf "${ARGS[@]}")
-  cat ca/custom_exts.conf ca/custom_exts_footer.conf > ca/custom_exts_actual.conf
+  cat ca/custom_exts_header.conf ca/custom_exts.conf ca/custom_exts_footer.conf > ca/custom_exts_actual.conf
 else
   ARGS=(-extensions "$4"_ext "${ARGS[@]}")
 fi

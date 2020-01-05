@@ -23,14 +23,23 @@ echo 'This will DELETE all existing data!!!'
 
 worker/prompt.sh
 
-reset() {
-  rm -rf ca
-  rm -rf identity
-  rm -rf req
-}
+CUSTOM_EXTS='
+subjectAltName = @san
+subjectKeyIdentifier = hash
+basicConstraints = critical, CA:FALSE
+keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
+certificatePolicies = 2.5.29.32.0
+
+[ san ]
+DNS.1 = *.example.org
+DNS.2 = *.example.net
+DNS.3 = example.org
+DNS.4 = example.net
+'
 
 identity-setup() {
   echo 'Identity Setup'
+  rm -rf identity
   echo -n "\
 CA\
 Ontario
@@ -44,52 +53,71 @@ y\
 }
 
 ca-init() {
+  rm -rf ca
+  echo 'CA Configuration'
   echo -n 'y' | ./ca-configure.sh
+  echo -n "$CUSTOM_EXTS" > ca/custom_exts.conf
+  echo 'CA Setup'
   echo -n 'y' | ./ca-setup.sh
 }
 
 req-init() {
-  echo -n 'y' | ./req-configure.sh generic
+  # $1 - extension profile
+  rm -rf req
+  rm -f ca/req.csr ca/req.crt
+  echo 'Request Configuration'
+  echo -n 'y' | ./req-configure.sh "$1"
+  echo -n "$CUSTOM_EXTS" > req/custom_exts.conf
+  echo 'Request Setup'
   echo -n 'y' | ./req-setup.sh
 }
 
-req-send() {
-  ./req-send.sh
-}
-
 ca-sign() {
-  printf "y\ny\n" | ./ca-sign.sh generic
-}
-
-ca-respond() {
-  ./ca-respond.sh
+  # $1 - extension profile
+  echo 'Certificate Signing'
+  printf "y\ny\n" | ./ca-sign.sh "$1"
 }
 
 req-bundle() {
+  echo 'Result Bundling'
   ./req-bundle.sh -fast-testing-mode
 }
 
 test-ocsp() {
+  echo 'OCSP Client/Server'
   echo -n 'y' | ./ca-ocsp-test-server.sh -1 intermediate 127.0.0.1:2560 > /dev/null &
   sleep 1
   ./view-ocsp.sh http://127.0.0.1:2560/ req/req.crt
 }
 
 verify() {
+  echo 'Simple Verification'
   ./verify-simple.sh req/req.crt
+  echo 'CRL Verification'
   ./verify-crl.sh req/req.crt
 }
 
-reset
+test-cert() {
+  # $1 - extension profile
+  echo 'Testing a '"$1"' certificate'
+
+  req-init "$1"
+  ./req-send.sh
+  ca-sign "$1"
+  ./ca-respond.sh
+  req-bundle
+  test-ocsp
+  verify
+}
+
+rm -rf ca
+rm -rf identity
+rm -rf req
+
 identity-setup
 ca-init
-req-init
-req-send
-ca-sign
-ca-respond
-req-bundle
-test-ocsp
-verify
+test-cert generic
+test-cert custom
 
 echo 'Tests passed'
 

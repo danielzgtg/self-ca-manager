@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -C
 worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
 worker/welcome.sh
@@ -92,13 +93,13 @@ init-ca intermediate init/intermediate_type.conf
 add-type intermediate generic_type.conf
 
 # Custom extensions support
-cp -T init/output_type_footer.conf custom_exts_footer.conf
-print-ca-info intermediate >> custom_exts_footer.conf
+cp -T init/output_type_footer.conf custom_exts_header.conf
+print-ca-info intermediate > custom_exts_footer.conf
 
 # Cleanup
 rm -rf init/ all/
 unlink req_header.conf
-unlink generic_type.conf
+rm ./*_type.conf
 
 # Backup intermediate CA in init state; it will be copied back in ./ca-setup.sh
 mv intermediate/ intermediate_init/
