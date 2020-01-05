@@ -14,6 +14,7 @@ plumbing/genkey.sh ca/root/ca.key
 
 echo 'Self-signing root CA...'
 plumbing/selfcert.sh ca/root/init_req.conf ca/root/ca.key ca/root/ca.crt
+cp -T ca/root/ca.crt ca/www/root.crt
 
 worker/rootcrl.sh
 

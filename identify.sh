@@ -5,35 +5,54 @@ worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 worker/welcome.sh
 
 echo 'Will set your identity.'
-echo 'Please enter your info below'
+echo 'Please enter your personal information below:'
 echo
 
-read -p 'Country Code (2 letters): ' -r -n 2 C
+read -rp 'Country Code (2 letters): ' -n 2 C
 echo
-read -p 'State or Province: ' -r ST
-read -p 'Locality (City): ' -r L
-read -p 'Name: ' -r O
-read -p 'Email Address: ' -r emailAddress
+read -rp 'State or Province: ' ST
+read -rp 'Locality (City): ' L
+read -rp 'Name: ' O
+read -rp 'Email Address: ' emailAddress
 echo
 
-RESULT='
-C = '"$C"'
-ST = '"$ST"'
-L = '"$L"'
-O  = '"$O"'
-CN = '"$O"'
-emailAddress = '"$emailAddress"
+echo 'Please enter your server information below:'
+echo 'Leave blank if you are not a CA'
+echo
 
-echo 'Please confirm:'
+read -rp 'Certificate Distribution Server (HTTP URL to subdirectory): ' server
+echo
+
+RESULT="\
+C = $C
+ST = $ST
+L = $L
+O  = $O
+CN = $O
+emailAddress = $emailAddress
+"
+
+echo 'Please confirm the personal information for "'"$O"'":'
+echo
 echo "$RESULT"
+worker/prompt.sh
 echo
 
+echo 'Please confirm the information for the CA:'
+echo
+echo 'Distribution URL: '"$server"
+echo
 worker/prompt.sh
+echo
 
 worker/initdir.sh identity
 
-cat identity/req_header_header.conf <(echo "$RESULT") > identity/req_header.conf
+# Global
+cat identity/req_header_header.conf <(echo -n "$RESULT") > identity/req_header.conf
 unlink identity/req_header_header.conf
+
+# CA-only
+echo -n "$server" > identity/ca_dist_url.txt
 
 echo
 echo 'If a CA is desired, run ./ca-configure.sh'

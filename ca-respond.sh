@@ -14,8 +14,8 @@ fi
 echo 'Copying the response...'
 
 cp ca/req.crt req/
-cp -fT ca/root/ca.crt req/root.crt
-cp -fT ca/intermediate/ca.crt req/chain.crt
+cp -fT ca/www/root.crt req/root.crt
+cp -fT ca/www/chain.crt req/chain.crt
 
 echo
 echo 'Next, use ./req-bundle.sh'

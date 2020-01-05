@@ -37,7 +37,10 @@ Ontario
 Toronto
 John Doe
 test@example.com
-y" | ./identify.sh
+http://pki.example.com/johndoecorp/
+y\
+y\
+" | ./identify.sh
 }
 
 ca-init() {
