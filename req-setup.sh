@@ -10,7 +10,7 @@ echo 'This will REPLACE your key!'
 worker/prompt.sh
 
 plumbing/genkey.sh req/req.key
-plumbing/request.sh req/req.conf req/req.key req/req.csr default
+plumbing/request.sh req/req.conf req/req.key req/req.csr "$(cat req/type.txt)"
 
 echo
 echo 'Review the ./req/req.csr file'

@@ -49,7 +49,7 @@ ca-init() {
 }
 
 req-init() {
-  echo -n 'y' | ./req-configure.sh
+  echo -n 'y' | ./req-configure.sh generic
   echo -n 'y' | ./req-setup.sh
 }
 
@@ -58,7 +58,7 @@ req-send() {
 }
 
 ca-sign() {
-  printf "y\ny\n" | ./ca-sign.sh
+  printf "y\ny\n" | ./ca-sign.sh generic
 }
 
 ca-respond() {

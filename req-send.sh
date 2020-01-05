@@ -16,7 +16,7 @@ echo 'Copying the request...'
 cp req/req.csr ca/
 
 echo
-echo 'Next, use ./ca-sign.sh'
+echo 'Next, use ./ca-sign.sh (generic)'
 echo
 echo 'Copied!'
 

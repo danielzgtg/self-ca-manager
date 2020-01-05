@@ -1,10 +1,27 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" 'extension profile' -- "$@"
 
 worker/welcome.sh
 
-echo 'Will sign a certificate signing request.'
+echo 'Will sign a certificate signing request for profile "'"$1"'"'
+
+case "$1" in
+  'generic')
+    # OK
+    ;;
+  'bootstrap'|'init'|'ocsp')
+    echo 'ERROR: Specified extension profile is for private internal use'
+    echo 'Signing such a request would grant the requester all privileges that you have'
+    exit 1
+    ;;
+  *)
+    echo 'ERROR: Unknown extension profile specified'
+    echo 'Please examine the extensions in the requester'\''s signing request to determine which profile they want'
+    echo 'If the requester didn'\''t specify any extensions, then they probably want "generic"'
+    exit 1
+    ;;
+esac
 
 echo 'Checking...'
 
@@ -38,7 +55,7 @@ if [[ $INFO == *'CRL Sign'* ]]; then
 fi
 
 echo 'Prompting and Signing request...'
-plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt default
+plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt "$1"
 
 worker/gencrl.sh intermediate
 
