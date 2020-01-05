@@ -20,37 +20,58 @@ mkdir root/crl
 mkdir intermediate/certs
 mkdir intermediate/crl
 
-output_config() {
-  # $1 - CA type
+add-type-directly() {
+  # $1 - CA config path or self-signing request config path
   # $2 - signtature output type config path
-  # Output: Output type config section text
 
-  URL_CONFIG='
-[ aia_info ]
-caIssuers;URI.0 = '"$CA_DIST_URL""$1"'.crt
-OCSP;URI.0 = '"$CA_DIST_URL""$1"'_ocsp/
-
-[ crl_info ]
-URI.0 = '"$CA_DIST_URL""$1"'.crl
-'
-
-  cat "$2" common/output_type_footer.conf <(echo "$URL_CONFIG")
+  cat "$2" common/output_type_footer.conf >> "$1"
 }
 
-ca_config() {
+add-type() {
   # $1 - CA type
   # $2 - signtature output type config path
 
-  cat common/config_header.conf "$1"/config_footer.conf <(output_config "$1" "$2") > "$1"/ca.conf
+  add-type-directly "$1"/ca.conf "$2"
+}
+
+add-ca-info-directly() {
+  # $1 - CA config path or self-signing request config path
+  # $2 - CA type
+
+  echo '
+[ aia_info ]
+caIssuers;URI.0 = '"$CA_DIST_URL""$2"'.crt
+OCSP;URI.0 = '"$CA_DIST_URL""$2"'_ocsp/
+
+[ crl_info ]
+URI.0 = '"$CA_DIST_URL""$2"'.crl
+' >> "$1"
+}
+
+add-ca-info() {
+  # $1 - CA type
+
+  add-ca-info-directly "$1"/ca.conf "$1"
+}
+
+init-ca-config() {
+  # $1 - CA type
+
+  cat common/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
+  add-ca-info "$1"
   unlink "$1"/config_footer.conf
 }
 
 # Root and intermediate config
-ca_config root common/intermediate_type.conf
-ca_config intermediate generic_type.conf
+init-ca-config root
+add-type root common/intermediate_type.conf
+init-ca-config intermediate
+add-type intermediate generic_type.conf
 
 # Root and intermediate init
-cat req_header.conf <(output_config root common/root_type.conf) > root/init_req.conf
+cp -T req_header.conf root/init_req.conf
+add-ca-info-directly root/init_req.conf root
+add-type-directly root/init_req.conf common/root_type.conf
 cat req_header.conf common/intermediate_type.conf > intermediate/init_req.conf
 
 # Cleanup
