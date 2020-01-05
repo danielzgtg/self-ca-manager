@@ -3,8 +3,6 @@ set -e
 set -C
 worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-worker/welcome.sh
-
 echo 'Will configure the CA.'
 echo 'This will RESET the ./ca/ folder!'
 
@@ -111,7 +109,7 @@ mv intermediate/ intermediate_init/
 
 echo
 echo 'Make changes to the .conf files in the ./ca/ folder if necessary'
-echo 'Then run ./ca-setup.sh'
+echo 'Then run "./self-ca-manager ca setup"'
 echo
 echo 'Configured!'
 

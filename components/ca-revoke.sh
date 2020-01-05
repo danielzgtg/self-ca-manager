@@ -2,8 +2,6 @@
 set -e
 worker/usage.sh "${BASH_SOURCE[0]}" 'input condemned certificate path' 'reason type' -- "$@"
 
-worker/welcome.sh
-
 echo 'Will revoke the specified certificate.'
 echo 'The specified certificate will become UNUSABLE!'
 

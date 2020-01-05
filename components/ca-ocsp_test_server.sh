@@ -9,8 +9,6 @@ else
   ONCE=1
 fi
 
-worker/welcome.sh
-
 echo 'Will a OCSP responder for the '"$1"' CA'
 echo 'WARNING: The OpenSSL implementation is for testing only. Please use a real OCSP responder for production'
 

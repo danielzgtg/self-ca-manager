@@ -9,8 +9,6 @@ else
   AES=0
 fi
 
-worker/welcome.sh
-
 echo 'Will make a certificate signing request.'
 echo 'This will REPLACE your key!'
 
@@ -52,8 +50,9 @@ fi
 if [[ -n "$SAN" ]]; then
   echo 'You will also need to send them ./identity/subject_alternative_names.conf'
 fi
-echo 'If using a local CA, ./req-send.sh can be used'
+echo 'If using a local CA, "./self-ca-manager req send" can be used'
 echo 'Now wait for the CA to respond and place the signed certificate at ./req/req.crt'
+echo 'Then run "./self-ca-manager req bundle"'
 echo
 echo 'Setup done!'
 

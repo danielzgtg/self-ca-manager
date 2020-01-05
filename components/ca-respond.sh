@@ -2,8 +2,6 @@
 set -e
 worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-worker/welcome.sh
-
 echo 'Will transfer back the signed certificate locally.'
 
 if [[ -e req/req.crt ]]; then
@@ -18,7 +16,7 @@ cp -ft req/ ca/www/*.crt
 cp -ft req/ ca/www/*.crl.pem
 
 echo
-echo 'Next, use ./req-bundle.sh'
+echo 'Next, use "./self-ca-manager req bundle"'
 echo
 echo 'Copied!'
 

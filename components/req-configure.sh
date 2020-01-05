@@ -3,8 +3,6 @@ set -e
 set -C
 worker/usage.sh "${BASH_SOURCE[0]}" 'extension profile' -- "$@"
 
-worker/welcome.sh
-
 echo 'Will configure the certificate request for profile "'"$1"'"'
 echo 'This will RESET the ./req/ folder!'
 
@@ -55,7 +53,7 @@ rm ./*_type.conf
 
 echo
 echo 'Make changes to the .conf files in the ./req/ folder if necessary'
-echo 'Then run ./req-setup.sh'
+echo 'Then run "./self-ca-manager req setup"'
 echo 'Also ask the CA for their certificate chain then place it at ./req/root.crt and ./req/chain.crt'
 echo
 echo 'Configured!'

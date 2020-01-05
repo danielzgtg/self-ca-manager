@@ -43,16 +43,16 @@ test@example.com
 http://pki.example.com/johndoecorp/
 y\
 y\
-" | ./identify.sh
+" | ./self-ca-manager identify
 }
 
 ca-init() {
   rm -rf ca
   echo 'CA Configuration'
-  echo -n 'y' | ./ca-configure.sh
+  echo -n 'y' | ./self-ca-manager ca configure
   echo -n "$CUSTOM_EXTS" > ca/custom_exts.conf
   echo 'CA Setup'
-  echo -n 'y' | ./ca-setup.sh -noaes
+  echo -n 'y' | ./self-ca-manager ca setup -noaes
 }
 
 req-init() {
@@ -60,35 +60,35 @@ req-init() {
   rm -rf req
   rm -f ca/req.csr ca/req.crt
   echo 'Request Configuration'
-  echo -n 'y' | ./req-configure.sh "$1"
+  echo -n 'y' | ./self-ca-manager req configure "$1"
   echo -n "$CUSTOM_EXTS" > req/custom_exts.conf
   echo 'Request Setup'
-  echo -n 'y' | ./req-setup.sh -noaes
+  echo -n 'y' | ./self-ca-manager req setup -noaes
 }
 
 ca-sign() {
   # $1 - extension profile
   echo 'Certificate Signing'
-  printf "y\ny\n" | ./ca-sign.sh "$1"
+  printf "y\ny\n" | ./self-ca-manager ca sign "$1"
 }
 
 req-bundle() {
   echo 'Result Bundling'
-  ./req-bundle.sh -fast-testing-mode
+  ./self-ca-manager req bundle -fast-testing-mode
 }
 
 test-ocsp() {
   echo 'OCSP Client/Server'
-  echo -n 'y' | ./ca-ocsp-test-server.sh -1 intermediate 127.0.0.1:2560 > /dev/null &
+  echo -n 'y' | ./self-ca-manager ca ocsp_test_server -1 intermediate 127.0.0.1:2560 > /dev/null &
   sleep 1
-  ./view-ocsp.sh http://127.0.0.1:2560/ req/req.crt
+  ./self-ca-manager view ocsp http://127.0.0.1:2560/ req/req.crt
 }
 
 verify() {
   echo 'Simple Verification'
-  ./verify-simple.sh req/req.crt
+  ./self-ca-manager verify simple req/req.crt
   echo 'CRL Verification'
-  ./verify-crl.sh req/req.crt
+  ./self-ca-manager verify crl req/req.crt
 }
 
 test-cert() {
@@ -96,9 +96,9 @@ test-cert() {
   echo 'Testing a '"$1"' certificate'
 
   req-init "$1"
-  ./req-send.sh
+  ./self-ca-manager req send
   ca-sign "$1"
-  ./ca-respond.sh
+  ./self-ca-manager ca respond
   req-bundle
   test-ocsp
   verify

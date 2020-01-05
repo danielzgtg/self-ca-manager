@@ -13,8 +13,6 @@ if [[ $FAST_TESTING_MODE -eq 0 ]] && [[ ! -f testmode ]]; then
   exit 1
 fi
 
-worker/welcome.sh
-
 echo 'Will bundle the key and certificate.'
 
 echo 'Checking...'

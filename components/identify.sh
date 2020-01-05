@@ -3,8 +3,6 @@ set -e
 set -C
 worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 
-worker/welcome.sh
-
 echo 'Will set your identity.'
 echo 'Please enter your personal information below:'
 echo
@@ -65,7 +63,7 @@ echo -n "$server" > identity/ca_dist_url.txt
 echo
 echo 'You might want to add same alternative names to ./identity/subject_alternative_names.conf'
 echo
-echo 'If a CA is desired, run ./ca-configure.sh'
-echo 'If a regular certificate is desired, run ./req-configure.sh (generic)'
+echo 'If a CA is desired, run "./self-ca-manager ca configure"'
+echo 'If a regular certificate is desired, run "./self-ca-manager req configure (generic)"'
 echo
 echo 'Identified!'

@@ -9,8 +9,6 @@ else
   AES=0
 fi
 
-worker/welcome.sh
-
 echo 'Will revoke the intermediate CA and create a new one.'
 echo 'This will RESET the intermediate CA!'
 

@@ -2,8 +2,6 @@
 set -e
 worker/usage.sh "${BASH_SOURCE[0]}" 'extension profile' -- "$@"
 
-worker/welcome.sh
-
 echo 'Will sign a certificate signing request for profile "'"$1"'"'
 
 case "$1" in
@@ -48,7 +46,7 @@ if [[ -e ca/req.crt ]]; then
   exit 1
 fi
 
-INFO=$(./view-req.sh ca/req.csr)
+INFO=$(components/view-req.sh ca/req.csr)
 
 if [[ $INFO == *'CA:TRUE'* ]]; then
   echo 'Denying request wanting to become a CA'
@@ -92,7 +90,7 @@ worker/cacleanup.sh
 echo
 echo 'Review the ./ca/req.crt file'
 echo 'Then send it back to the requester when ready'
-echo 'If using a local CA, ./ca-respond.sh can be used'
+echo 'If using a local CA, "./self-ca-manager ca respond" can be used'
 echo
 echo 'Signed!'
 

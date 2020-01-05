@@ -9,8 +9,6 @@ else
   AES=0
 fi
 
-worker/welcome.sh
-
 echo 'Will set up the CA.'
 echo 'This will REPLACE the CA key!'
 
@@ -32,7 +30,7 @@ worker/cacleanup.sh
 
 echo
 echo 'Now wait for certificate requests and place the request at ./ca/req.csr'
-echo 'Then run ./ca-sign.sh'
+echo 'Then run "./self-ca-manager ca sign (generic)"'
 echo
 echo 'Setup done!'
 
