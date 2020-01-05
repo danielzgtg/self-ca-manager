@@ -65,8 +65,10 @@ init-ca-config() {
 # Root and intermediate config
 init-ca-config root
 add-type root common/intermediate_type.conf
+add-type root common/ocsp_type.conf
 init-ca-config intermediate
 add-type intermediate generic_type.conf
+add-type intermediate common/ocsp_type.conf
 
 # Root and intermediate init
 cp -T req_header.conf root/init_req.conf
