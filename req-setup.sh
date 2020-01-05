@@ -19,3 +19,5 @@ echo 'If using a local CA, ./req-send.sh can be used'
 echo 'Now wait for the CA to respond and place the signed certificate at ./req/req.crt'
 echo
 echo 'Setup done!'
+
+exit 0

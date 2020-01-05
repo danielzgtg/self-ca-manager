@@ -44,3 +44,5 @@ echo
 echo 'The cryptography data at ./req/req.pem is bundled, signed, and ready to use.'
 echo
 echo 'Bundled!'
+
+exit 0

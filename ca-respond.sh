@@ -21,3 +21,5 @@ echo
 echo 'Next, use ./req-bundle.sh'
 echo
 echo 'Copied!'
+
+exit 0

@@ -20,3 +20,5 @@ worker/cacleanup.sh
 
 echo
 echo 'Intermediate CA has been Reset!'
+
+exit 0

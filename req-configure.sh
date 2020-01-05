@@ -9,15 +9,16 @@ echo 'This will RESET the ./req/ folder!'
 
 worker/prompt.sh
 
-echo 'Copying files...'
+worker/initdir.sh req
+cd req
 
-mkdir -p req
-rm -rf req/*
+echo 'Building request config...'
 
-cp -r default_req/* req/
-unlink req/README.MD
+cat req_header.conf generic_type.conf > req.conf
 
-cat identity/identity.conf >> req/req.conf
+# Cleanup
+unlink req_header.conf
+unlink generic_type.conf
 
 echo
 echo 'Make changes to the .conf files in the ./req/ folder if necessary'
@@ -25,3 +26,5 @@ echo 'Then run ./req-setup.sh'
 echo 'Also ask the CA for their certificate chain then place it at ./req/root.crt and ./req/chain.crt'
 echo
 echo 'Configured!'
+
+exit 0

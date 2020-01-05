@@ -23,3 +23,5 @@ worker/cacleanup.sh
 
 echo
 echo 'Specified certificate has been Revoked!'
+
+exit 0

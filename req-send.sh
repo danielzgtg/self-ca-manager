@@ -19,3 +19,5 @@ echo
 echo 'Next, use ./ca-sign.sh'
 echo
 echo 'Copied!'
+
+exit 0

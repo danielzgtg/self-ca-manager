@@ -17,7 +17,6 @@ read -p 'Email Address: ' -r emailAddress
 echo
 
 RESULT='
-[ my_req_distinguished_name ]
 C = '"$C"'
 ST = '"$ST"'
 L = '"$L"'
@@ -31,8 +30,10 @@ echo
 
 worker/prompt.sh
 
-mkdir -p identity
-echo "$RESULT" > identity/identity.conf
+worker/initdir.sh identity
+
+cat identity/req_header_header.conf <(echo "$RESULT") > identity/req_header.conf
+unlink identity/req_header_header.conf
 
 echo
 echo 'If a CA is desired, run ./ca-configure.sh'

@@ -76,3 +76,5 @@ ca-respond
 req-bundle
 
 echo 'Tests passed'
+
+exit 0

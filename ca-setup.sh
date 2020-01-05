@@ -26,3 +26,5 @@ echo 'Now wait for certificate requests and place the request at ./ca/req.csr'
 echo 'Then run ./ca-sign.sh'
 echo
 echo 'Setup done!'
+
+exit 0

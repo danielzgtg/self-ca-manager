@@ -55,3 +55,5 @@ echo 'Then send it back to the requester when ready'
 echo 'If using a local CA, ./ca-respond.sh can be used'
 echo
 echo 'Signed!'
+
+exit 0
