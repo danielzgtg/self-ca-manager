@@ -6,5 +6,5 @@ See SOURCES.MD
 
 # Quickstart
 
-Run `./identify.sh` to start and follow the prompt.
+Run `./self-ca-manager identify` to start and follow the prompt.
 The next script to use will be indicated at the end of each script.
