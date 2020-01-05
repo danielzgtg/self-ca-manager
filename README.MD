@@ -9,7 +9,6 @@ See SOURCES.MD
 Run `./identify.sh` to start and follow the prompt.
 The next script to use will be indicated at the end of each script.
 
-TODO crl send
 TODO: AES
-TODO script for verify
 TODO VPN
+TODO structure tests

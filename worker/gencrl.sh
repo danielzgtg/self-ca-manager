@@ -16,9 +16,11 @@ echo 'Publishing '"$1"' CA CRL...'
 case "$1" in
   'root')
     cp -fT ca/root/ca.crl ca/www/root.crl
+    cp -fT ca/root/ca.crl.pem ca/www/root.crl.pem
     ;;
   'intermediate')
     cp -fT ca/intermediate/ca.crl ca/www/chain.crl
+    cp -fT ca/intermediate/ca.crl.pem ca/www/chain.crl.pem
     ;;
   *)
     echo 'WARNING: Don'\''t know where to publish the certificate, skipping'

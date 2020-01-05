@@ -52,6 +52,12 @@ OCSP;URI.0 = '"$CA_DIST_URL""$1"'_ocsp/
 
 [ crl_info ]
 URI.0 = '"$CA_DIST_URL""$1"'.crl
+
+[ ocsp_info ]
+OCSP;URI.0 = '"$CA_DIST_URL""$1"'_ocsp/
+
+[ idp_info ]
+fullname = URI:'"$CA_DIST_URL""$1"'.crl
 '
 }
 

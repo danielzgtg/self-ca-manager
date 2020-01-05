@@ -75,6 +75,11 @@ test-ocsp() {
   ./view-ocsp.sh http://127.0.0.1:2560/ req/req.crt
 }
 
+verify() {
+  ./verify-simple.sh req/req.crt
+  ./verify-crl.sh req/req.crt
+}
+
 reset
 identity-setup
 ca-init
@@ -84,6 +89,7 @@ ca-sign
 ca-respond
 req-bundle
 test-ocsp
+verify
 
 echo 'Tests passed'
 

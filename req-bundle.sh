@@ -39,6 +39,7 @@ fi
 echo 'Concatenating everything together...'
 
 cat req/chain.crt req/root.crt > req/cachain.crt
+cat req/cachain.crt req/chain.crl.pem req/root.crl.pem > req/cachain.crl
 cat req/req.key req/req.crt req/cachain.crt req/dhparams.pem > req/req.pem
 
 echo

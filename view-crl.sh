@@ -2,4 +2,4 @@
 set -e
 worker/usage.sh "${BASH_SOURCE[0]}" 'CRL path' -- "$@"
 
-exect openssl crl -inform DER -in "$1" -noout -text
+exec openssl crl -inform DER -in "$1" -noout -text
