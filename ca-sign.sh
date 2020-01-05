@@ -38,9 +38,9 @@ if [[ $INFO == *'CRL Sign'* ]]; then
 fi
 
 echo 'Prompting and Signing request...'
-plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt
+plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt default
 
-worker/intermediatecrl.sh
+worker/gencrl.sh intermediate
 
 echo 'Saving a copy of the signed certificate...'
 CERTS_DIR=ca/intermediate/certs/

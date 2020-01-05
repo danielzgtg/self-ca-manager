@@ -9,16 +9,7 @@ echo 'This will REPLACE the CA key!'
 
 worker/prompt.sh
 
-echo 'Picking root CA key...'
-plumbing/genkey.sh ca/root/ca.key
-
-echo 'Self-signing root CA...'
-plumbing/selfcert.sh ca/root/init_req.conf ca/root/ca.key ca/root/ca.crt
-cp -T ca/root/ca.crt ca/www/root.crt
-
-#worker/initocsp.sh root
-
-worker/rootcrl.sh
+worker/initca.sh root root
 
 worker/intermediate.sh
 

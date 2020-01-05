@@ -27,69 +27,54 @@ add-req-type-directly() {
   cat "$2" >> "$1"
 }
 
-add-type-directly() {
-  # $1 - CA config path or self-signing request config path
+add-init-req-type() {
+  # $1 - CA type
   # $2 - signtature output type config path
 
-  add-req-type-directly "$1" "$2"
-  cat common/output_type_footer.conf >> "$1"
+  add-req-type-directly "$1"/init_req.conf "$2"
 }
 
 add-type() {
   # $1 - CA type
   # $2 - signtature output type config path
 
-  add-type-directly "$1"/ca.conf "$2"
+  add-req-type-directly "$1"/ca.conf "$2"
+  cat common/output_type_footer.conf >> "$1"/ca.conf
 }
 
-add-ca-info-directly() {
-  # $1 - CA config path or self-signing request config path
-  # $2 - CA type
+init-ca() {
+  # $1 - CA type
+  # $2 - CA self init signature config path
 
+  # CA config
+  cat common/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
   echo '
 [ aia_info ]
-caIssuers;URI.0 = '"$CA_DIST_URL""$2"'.crt
-OCSP;URI.0 = '"$CA_DIST_URL""$2"'_ocsp/
+caIssuers;URI.0 = '"$CA_DIST_URL""$1"'.crt
+OCSP;URI.0 = '"$CA_DIST_URL""$1"'_ocsp/
 
 [ crl_info ]
-URI.0 = '"$CA_DIST_URL""$2"'.crl
-' >> "$1"
-}
-
-add-ca-info() {
-  # $1 - CA type
-
-  add-ca-info-directly "$1"/ca.conf "$1"
-}
-
-init-ca-config() {
-  # $1 - CA type
-
-  cat common/config_header.conf "$1"/config_footer.conf > "$1"/ca.conf
-  add-ca-info "$1"
+URI.0 = '"$CA_DIST_URL""$1"'.crl
+' >> "$1"/ca.conf
   unlink "$1"/config_footer.conf
+  add-type "$1" common/ocsp_type.conf
+
+  # CA init request config
+  cp -T req_header.conf "$1"/init_req.conf
+  add-init-req-type "$1" "$2"
+  add-init-req-type "$1" common/ocsp_type.conf
 }
 
-# Root and intermediate config
+# Root CA
 
-init-ca-config root
+init-ca root common/root_type.conf
+add-type root common/root_type.conf
 add-type root common/intermediate_type.conf
-add-type root common/ocsp_type.conf
 
-init-ca-config intermediate
+# Intermediate CA
+
+init-ca intermediate common/intermediate_type.conf
 add-type intermediate generic_type.conf
-add-type intermediate common/ocsp_type.conf
-
-# Root and intermediate init
-
-cp -T req_header.conf root/init_req.conf
-add-ca-info-directly root/init_req.conf root
-add-type-directly root/init_req.conf common/root_type.conf
-add-req-type-directly root/init_req.conf common/ocsp_type.conf
-
-cp -T req_header.conf intermediate/init_req.conf
-add-req-type-directly intermediate/init_req.conf common/intermediate_type.conf
-add-req-type-directly intermediate/init_req.conf common/ocsp_type.conf
 
 # Cleanup
 rm -rf common/

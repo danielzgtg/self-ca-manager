@@ -17,7 +17,7 @@ worker/prompt.sh
 echo 'Revoking specified certificate...'
 plumbing/revoke.sh ca/intermediate/ca.conf "$1"
 
-worker/intermediatecrl.sh
+worker/gencrl.sh intermediate
 
 worker/cacleanup.sh
 
