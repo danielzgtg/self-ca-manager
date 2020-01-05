@@ -94,6 +94,8 @@ init-ca intermediate init/intermediate_type.conf
 add-type intermediate generic_type.conf
 add-type intermediate vpn_client_type.conf
 add-type intermediate vpn_server_type.conf
+add-type intermediate https_client_type.conf
+add-type intermediate https_server_type.conf
 
 # Custom extensions support
 cp -T init/output_type_footer.conf custom_exts_header.conf

@@ -126,6 +126,12 @@ IP.1 = 192.168.2.100
 test-cert vpnServer
 echo > identity/subject_alternative_names.conf
 test-cert vpnClient
+echo '
+DNS.1 = example.com
+' > identity/subject_alternative_names.conf
+test-cert httpsServer
+echo > identity/subject_alternative_names.conf
+test-cert httpsClient
 
 echo 'Tests passed'
 

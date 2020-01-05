@@ -10,6 +10,8 @@ case "$1" in
   'generic' \
   |'vpnClient' \
   |'vpnServer' \
+  |'httpsClient' \
+  |'httpsServer' \
   )
     # OK
     ;;
