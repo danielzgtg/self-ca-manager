@@ -50,15 +50,18 @@ if [[ $INFO == *'CA:TRUE'* ]]; then
   exit 1
 fi
 
-if [[ $INFO == *'Certificate Sign'* ]]; then
-  echo 'Denying request wanting "Certificate Sign" privileges'
-  exit 1
-fi
+restrict-privilege() {
+  # $1 - Privilege name
 
-if [[ $INFO == *'CRL Sign'* ]]; then
-  echo 'Denying request wanting "CRL Sign" privileges'
-  exit 1
-fi
+  if [[ $INFO == *"$1"* ]]; then
+    echo 'Denying request wanting "'"$1"'" privileges'
+    exit 1
+  fi
+}
+
+restrict-privilege 'Certificate Sign'
+restrict-privilege 'CRL Sign'
+restrict-privilege 'OCSP Signing'
 
 echo 'Prompting and Signing request...'
 plumbing/casign.sh ca/intermediate/ca.conf ca/req.csr ca/req.crt "$1"

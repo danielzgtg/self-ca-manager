@@ -7,7 +7,7 @@ ARGS=(-new -config "$1" -key "$2" -out "$3")
 if [[ "$4" == 'custom' ]]; then
   ARGS=(-extfile ca/custom_exts.conf "${ARGS[@]}")
 else
-  ARGS=(-extensions "$4"_ext "${ARGS[@]}")
+  ARGS=(-reqexts "$4"_ext "${ARGS[@]}")
 fi
 
 openssl req "${ARGS[@]}"
