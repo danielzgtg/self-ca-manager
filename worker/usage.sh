@@ -59,7 +59,6 @@ while [[ "$1" == '-'* ]]; do
   if [[ "$1" == "$OPTIONAL" ]]; then
     shift
   elif [[ -z "$OPTIONAL" ]]; then
-    echo b
     echo 'Unknown option: '"$1"
     external-fail
   fi

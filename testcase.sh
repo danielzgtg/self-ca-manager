@@ -69,6 +69,12 @@ req-bundle() {
   ./req-bundle.sh -fast-testing-mode
 }
 
+test-ocsp() {
+  echo -n 'y' | ./ca-ocsp-test-server.sh -1 intermediate 127.0.0.1:2560 > /dev/null &
+  sleep 1
+  ./view-ocsp.sh http://127.0.0.1:2560/ req/req.crt
+}
+
 reset
 identity-setup
 ca-init
@@ -77,6 +83,7 @@ req-send
 ca-sign
 ca-respond
 req-bundle
+test-ocsp
 
 echo 'Tests passed'
 
