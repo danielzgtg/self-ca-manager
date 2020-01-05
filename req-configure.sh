@@ -15,6 +15,12 @@ case "$1" in
   'custom')
     TYPE_PATH='custom_type.conf'
     ;;
+  'vpnClient')
+    TYPE_PATH='vpn_client_type.conf'
+    ;;
+  'vpnServer')
+    TYPE_PATH='vpn_server_type.conf'
+    ;;
   'bootstrap'|'init'|'ocsp')
     echo 'ERROR: Specified extension profile is to be for the CA'\''s private internal use'
     echo 'No CA would sign such a certificate for an outside entity so don'\''t even try'

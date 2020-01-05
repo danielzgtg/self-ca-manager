@@ -120,6 +120,12 @@ DNS.4 = example.net
 ' > identity/subject_alternative_names.conf
 test-cert generic
 test-cert custom
+echo '
+IP.1 = 192.168.2.100
+' > identity/subject_alternative_names.conf
+test-cert vpnServer
+echo > identity/subject_alternative_names.conf
+test-cert vpnClient
 
 echo 'Tests passed'
 

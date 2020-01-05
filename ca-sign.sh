@@ -7,7 +7,10 @@ worker/welcome.sh
 echo 'Will sign a certificate signing request for profile "'"$1"'"'
 
 case "$1" in
-  'generic')
+  'generic' \
+  |'vpnClient' \
+  |'vpnServer' \
+  )
     # OK
     ;;
   'custom')
