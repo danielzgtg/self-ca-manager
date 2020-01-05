@@ -23,6 +23,12 @@ echo
 read -rp 'Certificate Distribution Server (HTTP URL to subdirectory): ' server
 echo
 
+REGEX='^http:\/\/\w+(\.\w+)*\/(\w+\/)*$'
+if [[ ! "$server" =~ $REGEX ]]; then
+  echo 'Expected an URL that looks like http://pki.example.com/johndoecorp/'
+  exit 1
+fi
+
 RESULT="\
 C = $C
 ST = $ST
