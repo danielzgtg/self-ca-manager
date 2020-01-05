@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" '-noaes' -- "$@"
+
+if [[ "$1" == '-noaes' ]]; then
+  AES=1
+  shift
+else
+  AES=0
+fi
 
 worker/welcome.sh
 
@@ -27,7 +34,12 @@ if [[ -n "$SAN" ]]; then
   printf 'subjectAltName = @san\n[ san ]\n%s\n' "$SAN" >> req/req_actual.conf
 fi
 
-plumbing/genkey.sh req/req.key
+declare -a ARGS=(req/req.key)
+if [[ $AES -ne 0 ]]; then
+  ARGS=(-noaes "${ARGS[@]}")
+fi
+plumbing/genkey.sh "${ARGS[@]}"
+
 plumbing/request.sh req/req_actual.conf req/req.key req/req.csr "$TYPE"
 
 echo

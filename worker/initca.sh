@@ -1,9 +1,20 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" 'CA type' 'parent CA type' -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" '-noaes' 'CA type' 'parent CA type' -- "$@"
+
+if [[ "$1" == '-noaes' ]]; then
+  AES=1
+  shift
+else
+  AES=0
+fi
 
 echo 'Picking '"$1"' CA key...'
-plumbing/genkey.sh ca/"$1"/ca.key
+declare -a ARGS=(ca/"$1"/ca.key)
+if [[ $AES -ne 0 ]]; then
+  ARGS=(-noaes "${ARGS[@]}")
+fi
+plumbing/genkey.sh "${ARGS[@]}"
 
 if [[ "$1" == "$2" ]]; then
   echo 'Making '"$1"' CA self-request...'
@@ -32,6 +43,10 @@ case "$1" in
     ;;
 esac
 
-worker/initocsp.sh "$1"
+ARGS=("$1")
+if [[ $AES -ne 0 ]]; then
+  ARGS=(-noaes "${ARGS[@]}")
+fi
+worker/initocsp.sh "${ARGS[@]}"
 
 exit 0

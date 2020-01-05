@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" '-noaes' -- "$@"
+
+if [[ "$1" == '-noaes' ]]; then
+  AES=1
+  shift
+else
+  AES=0
+fi
 
 worker/welcome.sh
 
@@ -9,9 +16,17 @@ echo 'This will REPLACE the CA key!'
 
 worker/prompt.sh
 
-worker/initca.sh root root
+declare -a ARGS=(root root)
+if [[ $AES -ne 0 ]]; then
+  ARGS=(-noaes "${ARGS[@]}")
+fi
+worker/initca.sh "${ARGS[@]}"
 
-worker/intermediate.sh
+ARGS=(-noaes)
+if [[ $AES -eq 0 ]]; then
+  ARGS=()
+fi
+worker/intermediate.sh "${ARGS[@]}"
 
 worker/cacleanup.sh
 

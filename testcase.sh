@@ -52,7 +52,7 @@ ca-init() {
   echo -n 'y' | ./ca-configure.sh
   echo -n "$CUSTOM_EXTS" > ca/custom_exts.conf
   echo 'CA Setup'
-  echo -n 'y' | ./ca-setup.sh
+  echo -n 'y' | ./ca-setup.sh -noaes
 }
 
 req-init() {
@@ -63,7 +63,7 @@ req-init() {
   echo -n 'y' | ./req-configure.sh "$1"
   echo -n "$CUSTOM_EXTS" > req/custom_exts.conf
   echo 'Request Setup'
-  echo -n 'y' | ./req-setup.sh
+  echo -n 'y' | ./req-setup.sh -noaes
 }
 
 ca-sign() {

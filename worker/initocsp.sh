@@ -1,9 +1,20 @@
 #!/bin/bash
 set -e
-worker/usage.sh "${BASH_SOURCE[0]}" 'CA type' -- "$@"
+worker/usage.sh "${BASH_SOURCE[0]}" '-noaes' 'CA type' -- "$@"
+
+if [[ "$1" == '-noaes' ]]; then
+  AES=1
+  shift
+else
+  AES=0
+fi
 
 echo 'Picking '"$1"' CA OCSP key...'
-plumbing/genkey.sh ca/"$1"/ocsp.key
+declare -a ARGS=(ca/"$1"/ocsp.key)
+if [[ $AES -ne 0 ]]; then
+  ARGS=(-noaes "${ARGS[@]}")
+fi
+plumbing/genkey.sh "${ARGS[@]}"
 
 echo 'Making '"$1"' CA OCSP CSR...'
 plumbing/request.sh ca/"$1"/init_req.conf ca/"$1"/ocsp.key ca/"$1"/ocsp.csr ocsp
