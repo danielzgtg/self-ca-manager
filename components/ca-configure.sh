@@ -90,8 +90,8 @@ add-type root init/intermediate_type.conf
 
 init-ca intermediate init/intermediate_type.conf
 add-type intermediate generic_type.conf
-add-type intermediate vpn_client_type.conf
-add-type intermediate vpn_server_type.conf
+add-type intermediate tls_client_type.conf
+add-type intermediate tls_server_type.conf
 add-type intermediate https_client_type.conf
 add-type intermediate https_server_type.conf
 

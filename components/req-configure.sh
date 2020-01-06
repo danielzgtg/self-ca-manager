@@ -13,11 +13,11 @@ case "$1" in
   'custom')
     TYPE_PATH='custom_type.conf'
     ;;
-  'vpnClient')
-    TYPE_PATH='vpn_client_type.conf'
+  'tlsClient')
+    TYPE_PATH='tls_client_type.conf'
     ;;
-  'vpnServer')
-    TYPE_PATH='vpn_server_type.conf'
+  'tlsServer')
+    TYPE_PATH='tls_server_type.conf'
     ;;
   'httpsClient')
     TYPE_PATH='https_client_type.conf'

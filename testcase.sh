@@ -123,9 +123,9 @@ test-cert custom
 echo '
 IP.1 = 192.168.2.100
 ' > identity/subject_alternative_names.conf
-test-cert vpnServer
+test-cert tlsServer
 echo > identity/subject_alternative_names.conf
-test-cert vpnClient
+test-cert tlsClient
 echo '
 DNS.1 = example.com
 ' > identity/subject_alternative_names.conf
