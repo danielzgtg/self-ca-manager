@@ -45,6 +45,10 @@ add-type() {
 print-ca-info() {
   # $1 - CA type
 
+  if [[ -z "$CA_DIST_URL" ]]; then
+    return 0
+  fi
+
   echo -n '
 [ aia_info ]
 caIssuers;URI.0 = '"$CA_DIST_URL""$1"'.crt
@@ -59,6 +63,24 @@ OCSP;URI.0 = '"$CA_DIST_URL""$1"'_ocsp/
 [ idp_info ]
 fullname = URI:'"$CA_DIST_URL""$1"'.crl
 '
+}
+
+filter-ca-info() {
+  # $1 - CA config
+
+  if [[ -n "$CA_DIST_URL" ]]; then
+    return 0
+  fi
+
+  local RESULT=$(
+    cat "$1"/ca.conf | sed \
+    -e 's/[^\n]*@aia_info//g' \
+    -e 's/[^\n]*@crl_info//g' \
+    -e 's/[^\n]*@ocsp_info//g' \
+    -e 's/[^\n]*@idp_info//g' \
+  )
+  unlink "$1"/ca.conf
+  echo "$RESULT" > "$1"/ca.conf
 }
 
 init-ca() {
@@ -85,6 +107,7 @@ init-ca() {
 init-ca root init/root_type.conf
 add-type root init/root_type.conf
 add-type root init/intermediate_type.conf
+filter-ca-info root
 
 # Intermediate CA
 
@@ -95,6 +118,7 @@ add-type intermediate tls_client_type.conf
 add-type intermediate tls_server_type.conf
 add-type intermediate https_client_type.conf
 add-type intermediate https_server_type.conf
+filter-ca-info intermediate
 
 # Custom extensions support
 cp -T init/output_type_footer.conf custom_exts_header.conf

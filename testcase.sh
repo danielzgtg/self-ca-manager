@@ -31,7 +31,7 @@ extendedKeyUsage = codeSigning
 certificatePolicies = 2.5.29.32.0
 '
 
-identity-setup() {
+identity-setup1() {
   echo 'Identity Setup'
   rm -rf identity
   echo -n "\
@@ -41,6 +41,21 @@ Toronto
 John Doe
 test@example.com
 http://pki.example.com/johndoecorp/
+y\
+y\
+" | ./self-ca-manager identify
+}
+
+identity-setup2() {
+  echo 'Identity Setup'
+  rm -rf identity
+  echo -n "\
+US\
+California
+San Francisco
+John Appleseed
+test@example.com
+
 y\
 y\
 " | ./self-ca-manager identify
@@ -104,12 +119,16 @@ test-cert() {
   verify
 }
 
-rm -rf ca
-rm -rf identity
-rm -rf req
+reset() {
+  rm -rf ca
+  rm -rf identity
+  rm -rf req
+}
 
-identity-setup
+reset
+identity-setup1
 ca-init
+
 test-cert generic
 test-cert custom
 echo '
@@ -133,6 +152,14 @@ DNS.1 = example.com
 test-cert httpsServer
 echo > identity/subject_alternative_names.conf
 test-cert httpsClient
+
+reset
+identity-setup2
+ca-init
+test-cert generic
+test-cert minimal
+
+reset
 
 echo 'Tests passed'
 
