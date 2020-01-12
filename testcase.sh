@@ -119,6 +119,7 @@ DNS.3 = example.org
 DNS.4 = example.net
 ' > identity/subject_alternative_names.conf
 test-cert generic
+test-cert minimal
 test-cert custom
 echo '
 IP.1 = 192.168.2.100

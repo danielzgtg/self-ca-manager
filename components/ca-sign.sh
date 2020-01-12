@@ -6,6 +6,7 @@ echo 'Will sign a certificate signing request for profile "'"$1"'"'
 
 case "$1" in
   'generic' \
+  |'minimal' \
   |'tlsClient' \
   |'tlsServer' \
   |'httpsClient' \

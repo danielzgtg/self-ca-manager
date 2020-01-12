@@ -10,6 +10,9 @@ case "$1" in
   'generic')
     TYPE_PATH='generic_type.conf'
     ;;
+  'minimal')
+    TYPE_PATH='minimal_type.conf'
+    ;;
   'custom')
     TYPE_PATH='custom_type.conf'
     ;;
