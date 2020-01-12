@@ -5,8 +5,10 @@ worker/usage.sh "${BASH_SOURCE[0]}" -- "$@"
 echo 'Will transfer the certificate request locally.'
 
 if [[ -e ca/req.csr ]]; then
-  echo 'ERROR: The local CA already has a request in its queue'
-  exit 1
+  echo 'WARNING: The local CA already has a request in its queue'
+  worker/prompt.sh
+  unlink ca/req.csr
+  rm -f ca/req.crt
 fi
 
 echo 'Copying the request...'
